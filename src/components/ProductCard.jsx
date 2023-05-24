@@ -8,7 +8,9 @@ function ProductCard(props) {
 
   const truncatedName = Utility.truncateText(name);
   const discountPercent = Utility.formattedDiscountPercentage(price.discount);
-  const formattedPrice = Utility.formattedPriceToWon(price.price);
+  const formattedPrice = Utility.formattedPriceToWon(
+    Utility.calcDiscountPrice(price.price, price.discount),
+  );
 
   return (
     <StyledItemContainer>

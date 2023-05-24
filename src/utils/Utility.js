@@ -21,4 +21,10 @@ export const Utility = {
   formattedDiscountPercentage(percent) {
     return Math.floor(percent * 100) + '%';
   },
+
+  /* 할인가를 계산하는 메서드 */
+  calcDiscountPrice(price, percent) {
+    const calcPercent = 1 - percent;
+    return Math.floor(price * calcPercent);
+  },
 };
