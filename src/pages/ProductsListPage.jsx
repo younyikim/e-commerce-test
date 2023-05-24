@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import Layout from '../components/common/Layout';
 import { fetchProducts } from '../utils/apiService';
 import styled from 'styled-components';
+import ProductCard from '../components/ProductCard';
 
 function ProductListPage() {
   const { categoryId } = useParams();
@@ -28,7 +29,7 @@ function ProductListPage() {
       <StyledProductContainer>
         <StyledProductWrapper>
           {categoryProducts.map((product, index) => (
-            <div key={index}>{product.name}</div>
+            <ProductCard key={index} {...product} />
           ))}
         </StyledProductWrapper>
       </StyledProductContainer>
