@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import font from './fonts/Jal_Onuel.woff';
+import font from '../assets/fonts/Jal_Onuel.woff';
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
