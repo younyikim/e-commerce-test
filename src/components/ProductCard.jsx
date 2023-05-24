@@ -14,7 +14,7 @@ function ProductCard(props) {
 
   return (
     <StyledItemContainer>
-      <Link to={`/product-detail/${id}`}>
+      <Link to={`/product-detail/${id}`} state={props}>
         <StyledItem>
           <StyledItemImgWrapper>
             <StyledImg src={image} />
