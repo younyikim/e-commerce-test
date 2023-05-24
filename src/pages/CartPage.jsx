@@ -1,17 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import CartCard from '../components/CartCard';
 import CartTotalCard from '../components/CartTotalCard';
 import Layout from '../components/common/Layout';
 import { colors } from '../styles/colors';
-import { fetchCart } from '../utils/apiService';
+import { deleteCartItem, fetchCart } from '../utils/apiService';
 
 function CartPage() {
-  const { data, isLoading, error } = useQuery('cart', fetchCart);
+  const queryClient = useQueryClient();
 
   const [checkedList, setCheckedList] = useState([]);
   const [items, setItems] = useState();
+
+  const { data, isLoading, error } = useQuery('cart', fetchCart);
+  const deleteItemMutation = useMutation((itemId) => deleteCartItem(itemId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('cart');
+    },
+  });
 
   useEffect(() => {
     if (!isLoading && !error && data) {
@@ -44,6 +51,17 @@ function CartPage() {
     [checkedList],
   );
 
+  const handleDeleteItem = (itemId) => {
+    checkedList.shift();
+    deleteItemMutation.mutate(itemId);
+  };
+
+  const handleDeleteButton = () => {
+    checkedList.forEach((item) => {
+      handleDeleteItem(item.id);
+    });
+  };
+
   if (isLoading) {
     return <div>Loading cart...</div>;
   }
@@ -75,6 +93,7 @@ function CartPage() {
             />
             전체 선택
           </label>
+          <button onClick={handleDeleteButton}>삭제하기</button>
           {items.map((item) => (
             <StyledCartItemContainer key={item.id}>
               <StyledSelectInput
@@ -100,6 +119,15 @@ const StyledCartContainer = styled.section`
 const StyledCartProductContainer = styled.div`
   font-size: 15px;
   width: 100%;
+
+  button {
+    margin-left: 1rem;
+    padding: 0.1rem 1rem;
+    border: 0;
+    border-radius: 0.4rem;
+    background-color: ${colors.mainBlue};
+    color: ${colors.white};
+  }
 `;
 
 const StyledCartItemContainer = styled.div`

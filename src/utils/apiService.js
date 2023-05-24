@@ -8,6 +8,11 @@ export async function fetchProducts() {
   return response.json();
 }
 
+export async function fetchCart() {
+  const response = await fetch('http://localhost:8000/cart');
+  return response.json();
+}
+
 export async function addToCart({ productId, option, name, price, image }) {
   const response = await fetch('http://localhost:8000/cart', {
     method: 'POST',
@@ -18,9 +23,20 @@ export async function addToCart({ productId, option, name, price, image }) {
   return response.json();
 }
 
-export async function fetchCart() {
-  const response = await fetch('http://localhost:8000/cart');
-  return response.json();
+export async function deleteCartItem(deleteItemIds) {
+  const response = await fetch(`http://localhost:8000/cart/${deleteItemIds}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ deleteItemIds }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete cart items');
+  }
+
+  const data = await response.json();
+  return data;
 }
 
 export async function addProduct(newProduct) {

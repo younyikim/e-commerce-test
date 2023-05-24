@@ -6,7 +6,9 @@ import { StyledItemImgWrapper, StyledImg } from '../components/ProductCard';
 function CartCard(props) {
   const { option, name, price, image } = props;
 
-  const formattedPrice = Utility.formattedPriceToWon(price.price);
+  const formattedPrice = Utility.formattedPriceToWon(
+    Utility.calcDiscountPrice(price.price, price.discount),
+  );
 
   return (
     <StyledCardContainer>

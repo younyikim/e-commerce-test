@@ -12,6 +12,7 @@ const ProductDetailPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
+
   const { id, image, price, options, seller, name, category } = location.state;
 
   const [selectedOption, setSelectedOption] = useState(-1);
