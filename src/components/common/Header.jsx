@@ -9,7 +9,9 @@ function Header() {
     <StyledHeaderContainer>
       <StyledHeaderWrapper>
         <StyledLogoContainer>
-          <StyledLogo>오늘의집</StyledLogo>
+          <Link to="/">
+            <StyledLogo>오늘의집</StyledLogo>
+          </Link>
         </StyledLogoContainer>
         <StyledHeaderRight>
           <Link to="/cart">

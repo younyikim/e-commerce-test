@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { colors } from '../../styles/colors';
 import { applyMediaQuery } from '../../styles/mediaQueries';
 import CategoryNav from './CategoryNav';
 import Header from './Header';
 
-function Layout({ children, nav }) {
+function Layout({ children, nav, background = '' }) {
   return (
-    <StyledRoot>
+    <StyledRoot background={background}>
       <Header />
       <StyledLayoutBody>
         {nav && <CategoryNav />}
@@ -21,6 +22,8 @@ const StyledRoot = styled.div`
   align-items: center;
   overflow: scroll;
   width: 100%;
+  background-color: ${(props) =>
+    props.background !== '' ? `${colors.lightGrey}` : `${colors.white}`};
 `;
 
 const StyledLayoutBody = styled.div`
