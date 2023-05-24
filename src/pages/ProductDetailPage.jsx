@@ -19,7 +19,7 @@ const ProductDetailPage = () => {
   const { data, isLoading, error } = useQuery('categories', fetchCategories);
 
   const addToCartMutation = useMutation(
-    () => addToCart({ productId: id, option: options[selectedOption], name, price }),
+    () => addToCart({ productId: id, option: options[selectedOption], name, price, image }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('cart');

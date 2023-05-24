@@ -8,12 +8,17 @@ export async function fetchProducts() {
   return response.json();
 }
 
-export async function addToCart({ productId, option, name, price }) {
+export async function addToCart({ productId, option, name, price, image }) {
   const response = await fetch('http://localhost:8000/cart', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ productId, option, name, price }),
+    body: JSON.stringify({ productId, option, name, price, image }),
   });
 
+  return response.json();
+}
+
+export async function fetchCart() {
+  const response = await fetch('http://localhost:8000/cart');
   return response.json();
 }

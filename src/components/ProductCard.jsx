@@ -45,7 +45,7 @@ const StyledItem = styled.div`
   padding-bottom: 3rem;
 `;
 
-const StyledItemImgWrapper = styled.div`
+export const StyledItemImgWrapper = styled.div`
   position: relative;
   border-radius: 0.4rem;
   overflow: hidden;
@@ -53,7 +53,7 @@ const StyledItemImgWrapper = styled.div`
   background-color: ${colors.lightGrey};
 `;
 
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
   position: relative;
   top: 0;
   left: 0;
