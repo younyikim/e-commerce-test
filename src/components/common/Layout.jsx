@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { applyMediaQuery } from '../../styles/mediaQueries';
-import CategoryNav from '../CategoryNav';
+import CategoryNav from './CategoryNav';
 import Header from './Header';
 
 function Layout({ children, nav }) {
