@@ -17,7 +17,7 @@ function Header() {
           </Link>
           <Link to="/create-product">
             <StyledWriteButton>
-              <StyledButtonText>글쓰기</StyledButtonText>
+              <StyledButtonText>상품등록</StyledButtonText>
             </StyledWriteButton>
           </Link>
         </StyledHeaderRight>

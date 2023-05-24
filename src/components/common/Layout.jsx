@@ -5,15 +5,23 @@ import Header from './Header';
 
 function Layout({ children, nav }) {
   return (
-    <div>
+    <StyledRoot>
       <Header />
       <StyledLayoutBody>
         {nav && <CategoryNav />}
         <StyledMain>{children}</StyledMain>
       </StyledLayoutBody>
-    </div>
+    </StyledRoot>
   );
 }
+
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  width: 100%;
+`;
 
 const StyledLayoutBody = styled.div`
   display: flex;

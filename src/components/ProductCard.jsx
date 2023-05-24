@@ -1,24 +1,32 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../styles/colors';
+import { Utility } from '../utils/Utility';
 
 function ProductCard(props) {
   const { id, image, price, seller, name } = props;
 
+  const truncatedName = Utility.truncateText(name);
+  const discountPercent = Utility.formattedDiscountPercentage(price.discount);
+  const formattedPrice = Utility.formattedPriceToWon(price.price);
+
   return (
     <StyledItemContainer>
-      <StyledItem>
-        <StyledItemImgWrapper>
-          <StyledImg src={image} />
-        </StyledItemImgWrapper>
-        <StyledContent>
-          <StyledSellerText>{seller}</StyledSellerText>
-          <StyledNameText>{name}</StyledNameText>
-          <div>
-            <StyledDiscoutText>{price.discount}</StyledDiscoutText>
-            <StyledPriceText>{price.price}</StyledPriceText>
-          </div>
-        </StyledContent>
-      </StyledItem>
+      <Link to={`/product-detail/${id}`}>
+        <StyledItem>
+          <StyledItemImgWrapper>
+            <StyledImg src={image} />
+          </StyledItemImgWrapper>
+          <StyledContent>
+            <StyledSellerText>{seller}</StyledSellerText>
+            <StyledNameText>{truncatedName}</StyledNameText>
+            <div>
+              <StyledDiscoutText>{discountPercent}</StyledDiscoutText>
+              <StyledPriceText>{formattedPrice}</StyledPriceText>
+            </div>
+          </StyledContent>
+        </StyledItem>
+      </Link>
     </StyledItemContainer>
   );
 }
