@@ -1,16 +1,32 @@
-import { useQuery } from 'react-query';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../components/common/Layout';
-import { StyledDiscoutText, StyledPriceText } from '../components/ProductCard';
+import { styled } from 'styled-components';
 import { colors } from '../styles/colors';
-import { fetchCategories } from '../utils/apiService';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { addToCart, fetchCategories } from '../utils/apiService';
+import { StyledDiscoutText, StyledPriceText } from '../components/ProductCard';
+import { Utility } from '../utils/Utility';
+import { useState } from 'react';
 
-function ProductDetailPage() {
+const ProductDetailPage = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const location = useLocation();
   const { id, image, price, options, seller, name, category } = location.state;
 
+  const [selectedOption, setSelectedOption] = useState(-1);
+
   const { data, isLoading, error } = useQuery('categories', fetchCategories);
+
+  const addToCartMutation = useMutation(
+    () => addToCart({ productId: id, option: options[selectedOption], name, price }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('cart');
+        navigate('/cart');
+      },
+    },
+  );
 
   if (isLoading) {
     return <div>Loading</div>;
@@ -21,6 +37,20 @@ function ProductDetailPage() {
   }
 
   const categoryInfo = data.find((categoryValue) => categoryValue.id === category);
+
+  const handleOptionSelect = (index) => {
+    setSelectedOption(index);
+  };
+
+  const handleAddToCart = () => {
+    addToCartMutation.mutate();
+  };
+
+  const discountPercent = Utility.formattedDiscountPercentage(price.discount);
+  const originPrice = Utility.formattedPriceToWon(price.price);
+  const finalPrice = Utility.formattedPriceToWon(
+    Utility.calcDiscountPrice(price.price, price.discount),
+  );
 
   return (
     <Layout>
@@ -37,10 +67,10 @@ function ProductDetailPage() {
               <StyledDetailSellerText>{seller}</StyledDetailSellerText>
               <StyledDetailNameText>{name}</StyledDetailNameText>
               <div>
-                <StyledDiscoutText>{price.discount}</StyledDiscoutText>
-                <StyledDetailOriginPrice>{price.price}원</StyledDetailOriginPrice>
+                <StyledDiscoutText>{discountPercent}</StyledDiscoutText>
+                <StyledDetailOriginPrice>{originPrice}원</StyledDetailOriginPrice>
               </div>
-              <StyledDetailPrice>{price.price}원</StyledDetailPrice>
+              <StyledDetailPrice>{finalPrice}원</StyledDetailPrice>
             </StyledInfoTopContainer>
             <div>
               <div>
@@ -49,7 +79,13 @@ function ProductDetailPage() {
                   {options.map((option, index) => (
                     <div key={index}>
                       <li>
-                        <StyledDetailOption index={index}>{option}</StyledDetailOption>
+                        <StyledDetailOption
+                          index={index}
+                          selectedoption={selectedOption}
+                          onClick={() => handleOptionSelect(index)}
+                        >
+                          {option}
+                        </StyledDetailOption>
                       </li>
                     </div>
                   ))}
@@ -57,10 +93,12 @@ function ProductDetailPage() {
               </div>
               <StyledDetailTotalPrice>
                 <span>주문금액</span>
-                <span>{price.price}원</span>
+                <span>{selectedOption !== -1 ? finalPrice + '원' : '0원'}</span>
               </StyledDetailTotalPrice>
               <Link to="/cart">
-                <StyledDetailCartButton>장바구니</StyledDetailCartButton>
+                <StyledDetailCartButton disabled={selectedOption === -1} onClick={handleAddToCart}>
+                  장바구니
+                </StyledDetailCartButton>
               </Link>
             </div>
           </StyledInfoContainer>
@@ -68,7 +106,7 @@ function ProductDetailPage() {
       </StyledDetailContainer>
     </Layout>
   );
-}
+};
 
 const StyledDetailContainer = styled.section`
   width: 100%;
@@ -151,7 +189,7 @@ const StyledDetailOption = styled.button`
   border: ${(props) =>
     props.selectedoption === props.index
       ? `1px solid ${colors.mainBlue}`
-      : `1px solid ${colors.midGrey}`};
+      : `1px solid ${colors.lightGrey}`};
   padding: 1rem 2rem;
   border-radius: 0.4rem;
   margin-right: 1rem;
@@ -178,7 +216,7 @@ const StyledDetailCartButton = styled.button`
   color: ${(props) => (props.disabled ? `${colors.midGrey}` : `${colors.white}`)};
   background-color: ${(props) => (props.disabled ? `${colors.white}` : `${colors.mainBlue}`)};
   border: ${(props) =>
-    props.disabled ? `1px solid ${colors.midGrey}` : `1px solid ${colors.mainBlue}`};
+    props.disabled ? `1px solid ${colors.lightGrey}` : `1px solid ${colors.mainBlue}`};
   padding: 1rem 2rem;
   border-radius: 0.4rem;
   margin-right: 1rem;
