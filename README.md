@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# [과제] 오늘의집 Clone Coding
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+상품을 create, upload, purchase하는 기능을 가진 이커머스 웹 사이트를 클론하는 과제입니다.   
+[오늘의집](https://ohou.se/) 웹 사이트 일부를 클론 코딩하였습니다.
+<details>
+<summary>전체 페이지 동작 영상</summary>
+<div markdown="1">
 
-## Available Scripts
+[동작 영상](https://github.com/younyikim/e-commerce-test/assets/73516688/685b02e7-0720-4c19-8f5a-eb61f892b6fd)
 
-In the project directory, you can run:
+</div>
+</details>
 
-### `npm start`
+-----------     
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
+Front-end : React, react-query, react-router-dom.  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Back-end : json-server
 
-### `npm test`
+-----------     
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Getting Started
+* 요구사항 : Node js v16.15 이상   / Yarn v1.22 이상
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Project Clone 
+```
+git clone https://github.com/younyikim/e-commerce-test.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Move to Project
+````
+cd e-commerce-test
+````
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Install dependency
+```
+yarn install
+```
 
-### `npm run eject`
+4. Start server
+```
+yarn json-server
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+5. Start project
+```
+yarn start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+------------    
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 디렉토리 구조
+````
+src/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+|-- assets/
+|   |-- images/
+|   |-- fonts/
+|   |-- ...
+|-- components/
+|   |-- common/
+|   |-- Component2.jsx
+|   |-- ...
+|-- pages/
+|   |-- Page1.jsx
+|   |-- Page2.jsx
+|   |-- ...
 
-## Learn More
+|-- styles/
+|   |-- globalStyle.jsx
+|   |-- mediaQueries.jsx
+|   |-- ...
+|-- utils/
+|   |-- hooks/
+|   |-- ...
+|-- App.jsx
+|-- index.jsx
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+|-- router.jsx
+|-- ...  
+````
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-----------    
 
-### Analyzing the Bundle Size
+## MVP
+      
+1. Product List
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+상품들을 목록 형태로 보여주는 페이지입니다. 좌측의 네비게이션을 사용해 카테고리별로 상품을 확인할 수 있고, 각 상품을 클릭하면 해당 상품의 '상품 상세 페이지'로 이동합니다.
 
-### Making a Progressive Web App
+<img width="1438" alt="Product list img" src="https://github.com/younyikim/e-commerce-test/assets/73516688/71008c94-6f07-4acb-908b-bcefa5fcc26d">   
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+2.  Product Detail Page / Add to Cart Button    
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+상품의 상세 페이지로  상품의 이미지, 판매자, 이름 등 상품의 정보를 보여주며, 옵션을 선택한 후 장바구니에 상품을 추가할 수 있습니다
 
-### Deployment
+<img width="1432" alt="product detail page img" src="https://github.com/younyikim/e-commerce-test/assets/73516688/0f80fb06-580e-47a7-8d33-edd6b8a9ee0f">   
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+4. Cart Detail Page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+장바구니에서는 장바구니에 추가한 상품들을 확인할 수 있으며, 상품을 장바구니에서 삭제 / 전체 삭제할 수 있습니다.
+
+<img width="1432" alt="cart detail page img" src="https://github.com/younyikim/e-commerce-test/assets/73516688/e8f3aef2-2d73-4359-bfd3-9b2561c50bf4">   
+
+
+9. Admin : Create Product  
+
+상품 생성 페이지에서는 상품의 이름, 판매자 등의 정보를 입력하여 상품을 생성합니다. 상품 생성이 완료되면 새로 생성한 상품의 상세 페이지로 이동합니다.
+<img width="1432" alt="create product page img" src="https://github.com/younyikim/e-commerce-test/assets/73516688/ef09cc5e-d836-4068-acb9-d269f19efa34">   
+
+-----------     
